@@ -1,3 +1,4 @@
+# vimrc contents
 set nocompatible
 filetype off
 set rtp+=~/.vim/bundle/Vundle.vim
@@ -13,3 +14,21 @@ filetype plugin indent on
 
 colorscheme jellybeans
 syntax enable
+
+
+# script contents
+#!/bin/bash
+
+DOTFILES_DIR=~/dotfiles 
+VIMRC_SOURCE="$DOTFILES_DIR/.vimrc"
+VUNDLE_DIR="$HOME/.vim/bundle/Vundle.vim"
+cp "$VIMRC_SOURCE" "$HOME/.vimrc"
+
+if [ ! -d "$VUNDLE_DIR" ]; then
+  git clone https://github.com/VundleVim/Vundle.vim.git "$VUNDLE_DIR"
+else
+  echo "Installed."
+fi
+
+vim +PluginInstall +qall
+echo "Finished."
