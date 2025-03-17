@@ -1,0 +1,40 @@
+#!/bin/bash
+
+DOTFILES_REPO=~/dotfiles 
+TARGET_FILE=~/.bashrc
+BACKUP_FILE=~/.bashrc.bak
+NEW_FILE="$DOTFILES_REPO/.bashrc"
+
+REQUIRED_PACKAGES=("htop" "unrar" "p7zip-full" "nmap")
+
+missing_packages=()
+for package in "${REQUIRED_PACKAGES[@]}"; do
+    if ! dpkg -l | grep -qw "$package"; then
+        missing_packages+=("$package")
+    fi
+done
+
+if [[ ${#missing_packages[@]} -gt 0 ]]; then
+    echo "Missing packages detected: ${missing_packages[*]}"
+    if [[ $EUID -ne 0 ]]; then
+        echo "'Use sudo ./script'"
+    else
+        echo "Installing missing packages..."
+        sudo apt update && sudo apt install -y "${missing_packages[@]}"
+    fi
+fi
+
+
+if [[ -f "$TARGET_FILE" ]]; then
+    echo "Backing up existing .bashrc to $BACKUP_FILE"
+    mv "$TARGET_FILE" "$BACKUP_FILE"
+fi
+
+echo "Creating symbolic link from $NEW_FILE to $TARGET_FILE"
+ln -s "$NEW_FILE" "$TARGET_FILE"
+
+
+echo -e "\n✅✅✅✅✅✅✅✅✅✅"
+echo "Run 'source ~/.bashrc'"
+
+# Used chatgpt to help with this part
