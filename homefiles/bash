@@ -116,14 +116,12 @@ if ! shopt -oq posix; then
   fi
 fi
 
-# Custom Aliases
-alias ll='ls -alF'  # Detailed file listing
-alias gs='git status'  # Quick Git status
-alias c='clear'  # Clear terminal
-alias ..='cd ..'  # Move up one directory
-alias ports='netstat -tulnp'  # Show open ports
+alias ll='ls -alF'  
+alias gs='git status'  
+alias c='clear'  
+alias ..='cd ..'  
+alias ports='netstat -tulnp'  
 
-# Extract function from The Ultimate B.A. .bashrc
 extract () {
     if [ -f "$1" ]; then
         case "$1" in
