@@ -1,4 +1,5 @@
 # Description
+The script in this folder will the users EUID, then it will check the system package manager. After that it waits for a response from the user (yes or no). It checks if the software exists already to avoid conflict, and then it silently installs the software and lets the user know when its done and how to run it.
 
 # Sources 
 https://stackoverflow.com/questions/18215973/how-to-check-if-running-as-root-in-a-bash-script <br>
