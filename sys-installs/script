@@ -1,1 +1,56 @@
+#!/bin/bash
 
+if [ "$EUID" -ne 0 ]; then
+	echo "Run this with sudo | 'sudo bash script'"
+	  exit 1
+fi
+
+if ! command -v apt &> /dev/null; then
+  echo "This script requires the apt package manager. Exiting."
+	  exit 1
+fi
+
+read -p "Do you want to install singularity? (yes/no): " user_input
+if [[ "$user_input" != "yes" ]]; then
+	  exit 0
+fi
+
+if command -v singularity &> /dev/null; then
+  echo "Already installed."
+	  exit 1
+fi
+echo "Installing, Stand by."
+
+apt update -y && apt install -y \
+  build-essential \
+  libseccomp-dev \
+  pkg-config \
+  squashfs-tools \
+  cryptsetup \
+  curl \
+  git \
+  uuid-dev \
+  libgpgme-dev \
+  libglib2.0-dev \
+  libseccomp-dev \
+  libselinux1-dev \
+  wget \
+  gnupg
+
+GO_VERSION=1.21.5
+cd /tmp
+wget -q https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz
+rm -rf /usr/local/go
+tar -C /usr/local -xzf go${GO_VERSION}.linux-amd64.tar.gz
+export PATH=$PATH:/usr/local/go/bin
+
+export VERSION=4.1.3
+cd /tmp
+wget -q https://github.com/sylabs/singularity/releases/download/v${VERSION}/singularity-ce-${VERSION}.tar.gz
+tar -xzf singularity-ce-${VERSION}.tar.gz
+cd singularity-ce-${VERSION}
+./mconfig && \
+  make -C builddir && \
+  make -C builddir install
+
+echo "Install Complete | Try this command 'singularity --version'"
