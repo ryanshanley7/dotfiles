@@ -13,3 +13,5 @@ filetype plugin indent on
 
 colorscheme jellybeans
 syntax enable
+
+" This is a script that will setup vim with a custom plugin environment. It will add a color scheme (jellybean) and git integration, as well as text object manipulation
