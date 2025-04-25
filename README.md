@@ -16,3 +16,5 @@ To run the scripts you may need to change the permissions with `chmod +x [name o
 if that does not work try `sudo chmod +x [name of script]`<br>
 Then run the scripts with `./[name of script]`
 
+# Future Updates
+Possible updates, and improvments I would like to add to this repository, are cleaning up some of the commit messages, as well as adding even more detail to all the README files in the repository. As well as making a folder for the first section and moving everything into that, so that each section has it's own folder.
